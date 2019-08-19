@@ -382,8 +382,8 @@ int main(int argc, char* argv[])
             }
         }
         if (success) {
-            printf("Arrifying file \"%s\", naming array \"%s\", using %d character lines and writing output to \"%s\".\n",
-                   pInputFileName, pVariableName, lineLength, pOutputFileName);
+            printf("Arrifying file \"%s\", naming array \"%s\", using %d character lines and writing output to \"%s\"%s\n",
+                   pInputFileName, pVariableName, lineLength, pOutputFileName, bare ? " bare." : ".\n");
             x = parse(pInputFile, pOutputFile, pInputFileName, pExeName, bare, pVariableName, lineLength);
             printf("Done: %d line(s) written to file.\n", x);
         } else {
