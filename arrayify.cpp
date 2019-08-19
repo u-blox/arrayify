@@ -143,9 +143,9 @@ static void printUsage(char *pExeName) {
     printf("    -l optionally specifies the length of each line in the output file (%d by default, minimum %d),\n", LINE_LENGTH, LINE_LENGTH_MIN);
     printf("    -o optionally specifies the output file (if not specified the output file is input_file with extension %s%s);\n", EXT_SEPARATOR, OUTPUT_FILE_EXTENSION);
     printf("       if the output file exists it will be overwritten,\n");
-    printf("    -b bare; leave off any topping/tailing comment lines.\n");
+    printf("    -b bare; if this command-line switch is specified no topping/tailing comment lines will be added to the output.\n");
     printf("For example:\n");
-    printf("    %s input.txt -n fred -l 120 -o output.blah\n\n", pExeName);
+    printf("    %s input.txt -n fred -l 120 -o output.blah -b\n\n", pExeName);
 }
 
 // Parse the input file and write to the output file
