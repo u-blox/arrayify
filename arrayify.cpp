@@ -174,7 +174,7 @@ static int parse(FILE *pInputFile, FILE *pOutputFile, char *pInputFileName, char
             // Process the input buffer
             while (pIn < inputBuffer + bytesRead) {
                 // Assemble the output buffer for each input character.
-                // If we're in the prefix region, add it or a blank (if we're previously 
+                // If we're in the prefix region, add it or a blank (if we've previously 
                 // added the prefix)
                 if (pOut - pOutputBuffer < prefixLength) {
                     if (pPrefix != NULL) {
@@ -184,10 +184,12 @@ static int parse(FILE *pInputFile, FILE *pOutputFile, char *pInputFileName, char
                     }
                     pOut++;
                 // If we're at the end of the prefix put in the starting quote
-                // and free the prefix buffer in case it's not already freed
+                // and free the prefix buffer if it's not already freed
                 } else if (pOut - pOutputBuffer == prefixLength) {
-                    free (pPrefix);
-                    pPrefix = NULL;
+                    if (pPrefix != NULL) {
+                        free (pPrefix);
+                        pPrefix = NULL;
+                    }
                     *pOut = '"';
                     pOut++;
                 // If there's an escaped charcter to do, write it now
