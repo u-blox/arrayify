@@ -351,12 +351,12 @@ int main(int argc, char* argv[])
                 // is at least one character from the input, which
                 // [may be] escaped
                 if ((lineLength < 0) || (lineLength < PREFIX_LENGTH + strlen(pVariableName) + 5)) {
-                    success = false;
-                    printf("Line length %d is less than the minimum required to print something (%d).\n", lineLength, PREFIX_LENGTH + strlen(pVariableName) + 5);
+                    printf("Using line length %d as %d is less than the minimum required to print something.\n", PREFIX_LENGTH + strlen(pVariableName) + 5, lineLength);
+                    lineLength = PREFIX_LENGTH + strlen(pVariableName) + 5;
                 }
                 if (pOutputFileName == NULL) {
                     // No output file specified, so set it to the input
-                    // filename withotu path and with the default extension
+                    // filename without path and with the default extension
                     pOutputFileName = (char *) malloc (strlen(pDefaultName) + sizeof(OUTPUT_FILE_EXTENSION) - 1 + sizeof(EXT_SEPARATOR) - 1 + 1);
                     if (pOutputFileName != NULL) {
                         outputFileNameMalloced = true;
