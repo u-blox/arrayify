@@ -138,7 +138,7 @@ static void printUsage(char *pExeName) {
     printf("\n%s: take a text file and create from it a C const char array which can be compiled into code. Usage:\n", pExeName);
     printf("    %s input_file <-n name> <-l line_length> <-o output_file>\n", pExeName);
     printf("where:\n");
-    printf("    input_filename is the input text file,\n");
+    printf("    input_file is the input text file,\n");
     printf("    -n optionally specifies the name for the array (if not specified input_file, without file extension, will be used),\n");
     printf("    -l optionally specifies the length of each line in the output file (%d by default, minimum %d),\n", LINE_LENGTH, LINE_LENGTH_MIN);
     printf("    -o optionally specifies the output file (if not specified the output file is input_file with extension %s%s);\n", EXT_SEPARATOR, OUTPUT_FILE_EXTENSION);
