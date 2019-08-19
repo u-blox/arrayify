@@ -27,7 +27,6 @@
 #define EXT_SEPARATOR "."
 #define OUTPUT_FILE_EXTENSION "array"
 #define LINE_LENGTH 80
-#define LINE_LENGTH_MIN 25
 #define PREFIX "const char %s[] = "
 #define PREFIX_LENGTH 16 // The length not including the %s formatter or terminator
 #define POSTFIX "\"\n" // Closing quote and newline
@@ -140,7 +139,7 @@ static void printUsage(char *pExeName) {
     printf("where:\n");
     printf("    input_file is the input text file,\n");
     printf("    -n optionally specifies the name for the array (if not specified input_file, without file extension, will be used),\n");
-    printf("    -l optionally specifies the length of each line in the output file (%d by default, minimum %d),\n", LINE_LENGTH, LINE_LENGTH_MIN);
+    printf("    -l optionally specifies the length of each line in the output file (%d by default),\n", LINE_LENGTH);
     printf("    -o optionally specifies the output file (if not specified the output file is input_file with extension %s%s);\n", EXT_SEPARATOR, OUTPUT_FILE_EXTENSION);
     printf("       if the output file exists it will be overwritten,\n");
     printf("    -b bare; if this command-line switch is specified no topping/tailing comment lines will be added to the output.\n");
@@ -341,15 +340,19 @@ int main(int argc, char* argv[])
                     pTmp = strtok(NULL, DIR_SEPARATORS);
                 }
                 pDefaultName = strtok(pDefaultName, EXT_SEPARATOR);
-                // Check the line length
-                if (lineLength < LINE_LENGTH_MIN) {
-                    success = false;
-                    printf("Line length %d is less than the minimum (%d).\n", lineLength, LINE_LENGTH_MIN);
-                }
                 if (pVariableName == NULL) {
                     // No name specified, so set it to the input
                     // filename without paths and extension
                     pVariableName = pDefaultName;
+                }
+                // Check the line length: it must be at least the
+                // amount of space required to print the prefix (which
+                // includes the variable name) and "\x"\n, where x
+                // is at least one character from the input, which
+                // [may be] escaped
+                if ((lineLength < 0) || (lineLength < PREFIX_LENGTH + strlen(pVariableName) + 5)) {
+                    success = false;
+                    printf("Line length %d is less than the minimum required to print something (%d).\n", lineLength, PREFIX_LENGTH + strlen(pVariableName) + 5);
                 }
                 if (pOutputFileName == NULL) {
                     // No output file specified, so set it to the input
