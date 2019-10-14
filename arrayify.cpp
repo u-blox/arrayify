@@ -274,6 +274,7 @@ int main(int argc, char* argv[])
     char *pDefaultName = NULL;
     char *pMallocedName = NULL;
     char *pTmp;
+    char *pTmp1;
     struct stat st = { 0 };
 
     // Find the exe name in the first argument
@@ -341,7 +342,14 @@ int main(int argc, char* argv[])
                     pDefaultName = pTmp;
                     pTmp = strtok(NULL, DIR_SEPARATORS);
                 }
-                pDefaultName = strtok(pDefaultName, EXT_SEPARATOR);
+                pTmp1 = pDefaultName;
+                pTmp1 = strstr(pTmp1, EXT_SEPARATOR);
+                while (pTmp1 != NULL) {
+                    pTmp = pTmp1;
+                    pTmp1++;
+                    pTmp1 = strstr(pTmp1, EXT_SEPARATOR);
+                }
+                *pTmp = 0;
                 if (pVariableName == NULL) {
                     // No name specified, so set it to the input
                     // filename without paths and extension
